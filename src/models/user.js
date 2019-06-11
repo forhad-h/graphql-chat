@@ -1,22 +1,30 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { hash, compare } from 'bcryptjs'
 
-const userSchema = new mongoose.Schema(
+const { ObjectId } = Schema.Types
+
+const userSchema = new Schema(
   {
     email: {
       type: String,
       validate: {
         validator: email => User.doesNotExist({ email }),
-        message: ({ value }) => `Email ${value} already have taken.` // TODO: security
+        message: ({ value }) => `Email already have taken.`
       }
     },
     username: {
       type: String,
       validate: {
         validator: username => User.doesNotExist({ username }),
-        message: ({ value }) => `Username ${value} already have taken.` // TODO: security
+        message: ({ value }) => `Username already have taken.`
       }
     },
+    chats: [
+      {
+        type: ObjectId,
+        ref: 'Chat'
+      }
+    ],
     name: String,
     password: String
   },
