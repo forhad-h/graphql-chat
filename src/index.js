@@ -36,6 +36,15 @@ app.disable('x-powered-by')
       port: REDIS_PORT,
       pass: REDIS_PASSWORD
     })
+    /*
+      resave: re-save the session to store
+      rolling: update session lifetime
+      cookie: {
+        sameSite: Related with CSRF attacks
+        httpOnly: clients will not allow client-side JavaScript
+                  to see the cookie in document.cookie
+      }
+    */
     app.use(
       session({
         store,
@@ -47,7 +56,8 @@ app.disable('x-powered-by')
         cookie: {
           maxAge: parseInt(SESS_LIFETIME),
           sameSite: true,
-          secure: IN_PROD
+          secure: IN_PROD,
+          httpOnly: true
         }
       })
     )
@@ -57,11 +67,7 @@ app.disable('x-powered-by')
       schemaDirectives,
       playground: IN_PROD
         ? false
-        : {
-          settings: {
-            'request.credentials': 'include'
-          }
-        },
+        : { settings: { 'request.credentials': 'include' } },
       context: ({ req, res }) => ({ req, res })
     })
 
