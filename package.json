@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
-    "apollo-server-express": "^2.6.1",
+    "apollo-server-express": "^2.14.2",
     "bcryptjs": "^2.4.3",
     "connect-redis": "^3.4.1",
     "esm": "^3.2.25",
